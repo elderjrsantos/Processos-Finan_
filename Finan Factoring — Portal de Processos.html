@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/elder.santos/Downloads/index_18.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finan Factoring — Portal de Processos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Finan Factoring — Portal de Processos_files/css2" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f1f3d;--navy2:#172847;--blue:#1a56db;--blue-light:#e8effd;
+  --gold:#c9a84c;--gold-light:#fdf6e3;
+  --text:#1a1a2e;--text2:#4a5568;--text3:#8896a5;
+  --border:#e2e8f0;--surface:#f8fafc;--white:#ffffff;
+  --success:#0d9f6e;--success-bg:#ecfdf5;
+  --warning:#b45309;--warning-bg:#fffbeb;
+  --info:#1a56db;--info-bg:#eff6ff;
+  --danger:#c53030;--danger-bg:#fff5f5;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
+  --shadow-lg:0 8px 32px rgba(15,31,61,.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);min-height:100vh;}
+
+/* LOADING */
+#loading-screen{position:fixed;inset:0;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:16px;}
+.loading-mark{width:64px;height:64px;background:var(--gold);border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);}
+.loading-text{color:rgba(255,255,255,.7);font-size:14px;}
+.loading-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:none;align-items:center;justify-content:center;background:var(--navy);background-image:radial-gradient(ellipse at 20% 50%,rgba(26,86,219,.18) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,.10) 0%,transparent 50%);padding:2rem;}
+.login-card{background:var(--white);border-radius:20px;padding:3rem 2.5rem;width:100%;max-width:420px;box-shadow:var(--shadow-lg);}
+.login-logo{text-align:center;margin-bottom:2rem;}
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;background:var(--navy);border-radius:16px;margin-bottom:1rem;}
+.brand-mark span{font-family:'DM Serif Display',serif;font-size:24px;color:var(--gold);}
+.login-logo h1{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy);line-height:1.2;}
+.login-logo p{font-size:13px;color:var(--text3);margin-top:4px;}
+.login-label{font-size:13px;font-weight:500;color:var(--text2);display:block;margin-bottom:6px;}
+.login-select,.login-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border-color .2s;margin-bottom:1rem;appearance:none;-webkit-appearance:none;}
+.login-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238896a5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
+.login-select:focus,.login-input:focus{border-color:var(--blue);}
+.login-btn{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:background .2s;margin-top:.5rem;}
+.login-btn:hover{background:var(--navy2);}
+.login-error{background:var(--danger-bg);color:var(--danger);font-size:13px;padding:10px 14px;border-radius:var(--radius-sm);margin-top:12px;display:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy);color:white;padding:10px 16px;border-radius:10px;font-size:13px;box-shadow:var(--shadow-lg);z-index:900;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.success{background:var(--success);}
+.toast.error{background:var(--danger);}
+
+/* SYNC INDICATOR */
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--success);display:inline-block;margin-right:6px;transition:background .3s;}
+.sync-dot.saving{background:var(--gold);animation:pulse .6s infinite alternate;}
+.sync-dot.error{background:var(--danger);}
+@keyframes pulse{from{opacity:1}to{opacity:.4}}
+
+/* APP */
+#app{display:none;min-height:100vh;}
+.sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--navy);display:flex;flex-direction:column;z-index:100;overflow-y:auto;transition:transform .3s;}
+.sidebar-logo{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.s-brand{display:flex;align-items:center;gap:10px;}
+.s-mark{width:36px;height:36px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);flex-shrink:0;}
+.s-brand-name{font-family:'DM Serif Display',serif;font-size:15px;color:var(--white);line-height:1.2;}
+.s-brand-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+.user-pill{margin:1rem 1.5rem;background:rgba(255,255,255,.06);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--white);flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-name{font-size:13px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-dept{font-size:11px;color:rgba(255,255,255,.45);}
+.nav-section-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.3);padding:1rem 1.5rem .5rem;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;}
+.nav-add-dept{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:18px;line-height:1;padding:0 2px;transition:color .15s;}
+.nav-add-dept:hover{color:var(--gold);}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 1.5rem;font-size:13.5px;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;border-left:3px solid transparent;}
+.nav-item:hover{color:var(--white);background:rgba(255,255,255,.05);}
+.nav-item.active{color:var(--white);background:rgba(26,86,219,.25);border-left-color:var(--gold);}
+.nav-icon{font-size:16px;width:20px;text-align:center;}
+.nav-label{flex:1;}
+.nav-edit-btn{opacity:0;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:13px;padding:2px 4px;border-radius:4px;transition:opacity .15s;}
+.nav-item:hover .nav-edit-btn{opacity:1;}
+.nav-edit-btn:hover{color:var(--gold);}
+.sidebar-footer{margin-top:auto;padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);}
+.sync-status{font-size:11px;color:rgba(255,255,255,.4);display:flex;align-items:center;margin-bottom:10px;}
+.logout-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.4);cursor:pointer;transition:color .15s;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;}
+.logout-btn:hover{color:rgba(255,255,255,.8);}
+
+/* MAIN */
+.main{margin-left:260px;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;gap:1rem;}
+.topbar-left{min-width:0;}
+.topbar-title{font-size:18px;font-weight:600;color:var(--navy);}
+.topbar-sub{font-size:13px;color:var(--text3);margin-top:1px;}
+.topbar-actions{display:flex;gap:8px;flex-shrink:0;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1.5px solid transparent;white-space:nowrap;}
+.btn-primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.btn-primary:hover{background:var(--navy2);}
+.btn-outline{background:transparent;color:var(--text2);border-color:var(--border);}
+.btn-outline:hover{background:var(--surface);color:var(--navy);}
+.btn-danger{background:transparent;color:var(--danger);border-color:var(--danger);}
+.btn-danger:hover{background:var(--danger-bg);}
+.btn-sm{padding:5px 10px;font-size:12px;}
+.content{padding:2rem;flex:1;}
+
+/* PROCESS CARDS */
+.process-header-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.process-title-block h2{font-family:'DM Serif Display',serif;font-size:26px;color:var(--navy);}
+.process-title-block p{font-size:14px;color:var(--text3);margin-top:4px;}
+.reorder-hint{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 10px;}
+.process-grid{display:grid;gap:12px;}
+.proc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s,opacity .2s,transform .15s;}
+.proc-card:hover{box-shadow:var(--shadow-lg);}
+.proc-card.dragging{opacity:.45;transform:scale(.98);box-shadow:none;}
+.proc-card.drag-over{border-color:var(--blue);border-style:dashed;background:var(--blue-light);}
+.proc-card-header{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;gap:1rem;}
+.proc-card-header:hover{background:var(--surface);}
+.proc-drag-handle{cursor:grab;color:var(--text3);padding:4px 6px 4px 0;display:flex;flex-direction:column;gap:3px;flex-shrink:0;opacity:.4;transition:opacity .15s;}
+.proc-card:hover .proc-drag-handle{opacity:1;}
+.proc-drag-handle span{display:block;width:16px;height:2px;background:currentColor;border-radius:2px;}
+.proc-drag-handle:active{cursor:grabbing;}
+.proc-card-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;}
+.proc-num{width:34px;height:34px;border-radius:9px;background:var(--blue-light);color:var(--blue);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.proc-name{font-size:15px;font-weight:600;color:var(--navy);}
+.proc-meta{font-size:12px;color:var(--text3);margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.proc-card-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.proc-del-btn{background:none;border:1px solid transparent;border-radius:6px;padding:5px 7px;cursor:pointer;color:var(--text3);font-size:14px;transition:all .15s;display:flex;align-items:center;opacity:0;}
+.proc-card:hover .proc-del-btn{opacity:1;}
+.proc-del-btn:hover{background:var(--danger-bg);color:var(--danger);border-color:var(--danger);}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+.badge-blue{background:var(--info-bg);color:var(--info);}
+.badge-green{background:var(--success-bg);color:var(--success);}
+.badge-yellow{background:var(--warning-bg);color:var(--warning);}
+.chevron-icon{width:20px;height:20px;color:var(--text3);transition:transform .25s;flex-shrink:0;cursor:pointer;}
+.chevron-icon.open{transform:rotate(180deg);}
+.proc-body{display:none;border-top:1px solid var(--border);padding:1.25rem;animation:slideDown .2s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.proc-body.open{display:block;}
+.proc-body-actions{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
+
+/* STEPS */
+.steps-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.steps-list{display:flex;flex-direction:column;}
+.step-item{display:flex;transition:border-top .1s;}
+.step-left{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.step-dot{width:28px;height:28px;border-radius:50%;background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text2);flex-shrink:0;z-index:1;}
+.step-line{width:2px;flex:1;background:var(--border);margin:3px 0;min-height:16px;}
+.step-item:last-child .step-line{display:none;}
+.step-content{padding:2px 0 24px 14px;flex:1;}
+.step-text-row{display:flex;align-items:flex-start;gap:6px;}
+.step-drag-handle{cursor:grab;color:var(--text3);font-size:14px;flex-shrink:0;opacity:.4;transition:opacity .15s;user-select:none;line-height:1.6;padding-top:1px;}
+.step-item:hover .step-drag-handle{opacity:1;}
+.step-drag-handle:active{cursor:grabbing;}
+.step-text{font-size:14px;color:var(--text);line-height:1.5;font-weight:500;flex:1;}
+.step-detail{font-size:12px;color:var(--text3);margin-top:3px;line-height:1.4;}
+.step-annotation{background:var(--gold-light);border:1px solid #e8d5a3;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:13px;color:#7a5c00;line-height:1.5;}
+.step-annotation-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#a07800;margin-bottom:3px;}
+.step-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.icon-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s;display:inline-flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif;}
+.icon-btn:hover{background:var(--surface);color:var(--navy);}
+.icon-btn.danger:hover{background:var(--danger-bg);color:var(--danger);border-color:var(--danger);}
+
+/* MEDIA */
+.media-section{margin-top:12px;}
+.media-section-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:8px;}
+.media-thumb-wrap{display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--surface);}
+.media-visual{aspect-ratio:16/10;overflow:hidden;position:relative;}
+.media-visual img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block;transition:opacity .2s;}
+.media-visual img:hover{opacity:.88;}
+.media-visual video{width:100%;height:100%;object-fit:cover;display:block;}
+.media-remove{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;}
+.media-visual:hover .media-remove{opacity:1;}
+.media-type-badge{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;}
+.media-caption-edit{width:100%;padding:4px 6px;font-size:11px;border:none;border-top:1px solid var(--border);background:var(--surface);color:var(--text2);font-family:'DM Sans',sans-serif;outline:none;}
+.media-caption-edit:focus{background:var(--white);}
+.media-upload-zone{border:2px dashed var(--border);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface);}
+.media-upload-zone:hover{border-color:var(--blue);background:var(--blue-light);}
+.media-upload-zone svg{width:24px;height:24px;color:var(--text3);margin:0 auto 6px;display:block;}
+.media-upload-zone p{font-size:12px;color:var(--text3);line-height:1.4;}
+.media-upload-zone span{font-size:11px;color:var(--text3);opacity:.7;}
+
+/* PROC FOOTER */
+.proc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;margin-top:8px;border-top:1px solid var(--border);flex-wrap:wrap;gap:8px;}
+.proc-resp{font-size:13px;color:var(--text2);}
+.proc-resp strong{color:var(--navy);}
+
+/* WELCOME */
+.welcome-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:2rem;}
+.welcome-icon{width:80px;height:80px;background:var(--blue-light);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
+.welcome-icon svg{width:40px;height:40px;color:var(--blue);}
+.welcome-screen h2{font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);margin-bottom:.75rem;}
+.welcome-screen p{font-size:15px;color:var(--text2);max-width:440px;line-height:1.6;}
+.dept-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:2rem;width:100%;max-width:680px;}
+.dept-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:all .15s;text-align:left;box-shadow:var(--shadow);}
+.dept-card:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.dept-card-icon{font-size:24px;margin-bottom:10px;}
+.dept-card-name{font-size:14px;font-weight:600;color:var(--navy);}
+.dept-card-count{font-size:12px;color:var(--text3);margin-top:3px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal{background:var(--white);border-radius:16px;padding:2rem;width:100%;max-width:520px;box-shadow:var(--shadow-lg);max-height:90vh;overflow-y:auto;}
+.modal h3{font-family:'DM Serif Display',serif;font-size:20px;color:var(--navy);margin-bottom:1.25rem;}
+.form-group{margin-bottom:1rem;}
+.form-label{font-size:13px;font-weight:500;color:var(--text2);display:block;margin-bottom:6px;}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border-color .2s;}
+.form-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238896a5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);}
+.form-textarea{min-height:80px;resize:vertical;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:1.5rem;flex-wrap:wrap;}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-top:8px;}
+.emoji-opt{font-size:20px;padding:6px;border-radius:6px;cursor:pointer;text-align:center;transition:background .15s;border:2px solid transparent;}
+.emoji-opt:hover,.emoji-opt.selected{background:var(--blue-light);border-color:var(--blue);}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:600;display:flex;align-items:center;justify-content:center;cursor:zoom-out;}
+.lightbox img{max-width:92vw;max-height:92vh;border-radius:8px;object-fit:contain;}
+.lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.15);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;}
+
+/* MOBILE */
+.mobile-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--navy);border:none;border-radius:8px;padding:8px;cursor:pointer;}
+.mobile-toggle svg{width:20px;height:20px;color:white;display:block;}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
+@media(max-width:768px){
+  .mobile-toggle{display:flex;}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-overlay.open{display:block;}
+  .main{margin-left:0;}
+  .topbar{padding:1rem 1rem 1rem 3.5rem;}
+  .content{padding:1rem;}
+  .media-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen" style="display: none;">
+  <div class="loading-mark">FF</div>
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loading-text">Carregando dados...</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen" style="display: flex;">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="brand-mark"><span>FF</span></div>
+      <h1>Finan Factoring</h1>
+      <p>Fomento Mercantil Ltda — Portal de Processos</p>
+    </div>
+    <label class="login-label">Seu departamento</label>
+    <select class="login-select" id="sel-dept"><option value="">Selecione...</option><option value="__admin__">⭐ Administrador</option><option value="comercial">📈 Comercial</option><option value="cadastro">🗂️ Cadastro</option><option value="financeiro">💰 Financeiro</option><option value="operacoes">⚙️ Operações / TI</option><option value="ligacoes">📞 Ligações</option></select>
+    <label class="login-label">Seu nome</label>
+    <input class="login-input" type="text" id="inp-name" placeholder="Ex: João Silva">
+    <label class="login-label">Senha</label>
+    <input class="login-input" type="password" id="inp-pass" placeholder="••••••">
+    <button class="login-btn" onclick="doLogin()">Entrar no portal</button>
+    <div class="login-error" id="login-error"></div>
+    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:1.5rem;">Senha dos departamentos: <strong>finan2024</strong><br>Admin: <strong>finan@admin2024</strong></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <button class="mobile-toggle" onclick="toggleSidebar()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+  </button>
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="s-brand">
+        <div class="s-mark">FF</div>
+        <div><div class="s-brand-name">Finan Factoring</div><div class="s-brand-sub">Portal de Processos</div></div>
+      </div>
+    </div>
+    <div class="user-pill">
+      <div class="user-avatar" id="user-avatar">--</div>
+      <div class="user-info">
+        <div class="user-name" id="user-name-display">-</div>
+        <div class="user-dept" id="user-dept-display">-</div>
+      </div>
+    </div>
+    <div class="nav-section-label">
+      Departamentos
+      <button class="nav-add-dept" title="Adicionar departamento" onclick="openAddDept()">＋</button>
+    </div>
+    <nav id="nav-menu"></nav>
+    <div class="sidebar-footer">
+      <div class="sync-status" id="sync-status"><span class="sync-dot" id="sync-dot"></span><span id="sync-text">Sincronizado</span></div>
+      <button class="logout-btn" onclick="doLogout()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Sair
+      </button>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="topbar-title">Bem-vindo</div>
+        <div class="topbar-sub" id="topbar-sub">Selecione um departamento</div>
+      </div>
+      <div class="topbar-actions" id="topbar-actions"></div>
+    </header>
+    <main class="content" id="main-content"></main>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" style="display:none" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" style="display:none" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="file:///C:/Users/elder.santos/Downloads/index_18.html" alt="">
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+// FIREBASE CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyBoIWFVA-RtTv9zPZP8rJh6h1JutovQuGU",
+  authDomain: "finan-processos.firebaseapp.com",
+  projectId: "finan-processos",
+  storageBucket: "finan-processos.firebasestorage.app",
+  messagingSenderId: "95276065412",
+  appId: "1:95276065412:web:3a5aef25eb92f45808d8d1",
+  databaseURL: "https://finan-processos-default-rtdb.firebaseio.com"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+
+// ── CONSTANTS ──
+// SENHAS — admin ve tudo e pode editar tudo; cada dept tem sua propria senha
+const PASSES = {
+  admin:      'finan@admin2024',
+  comercial:  'finan2024',
+  cadastro:   'finan2024',
+  financeiro: 'finan2024',
+  operacoes:  'finan2024',
+  ligacoes:   'finan2024',
+};
+// Para trocar a senha de um departamento, edite o valor acima e reenvie o arquivo ao GitHub.
+const EMOJIS = ['📈','🗂️','💰','⚙️','📞','👥','📋','🏦','📊','🔍','💼','📝','🤝','🚀','⭐','🔒'];
+const BADGE_MAP   = {blue:'badge-blue',green:'badge-green',yellow:'badge-yellow'};
+const BADGE_LABEL = {blue:'Em uso',green:'Documentado',yellow:'Em revisão'};
+
+// ── STATE ──
+let DB = null;
+let currentUser = null;
+let currentDeptId = null;
+let saveTimer = null;
+let unsubscribe = null;
+
+// ── HELPERS ──
+function uid(){ return Math.random().toString(36).slice(2,9); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function toast(msg, type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+(type||'');
+  void t.offsetWidth; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+function setSyncStatus(state){
+  const dot=document.getElementById('sync-dot');
+  const txt=document.getElementById('sync-text');
+  if(!dot||!txt)return;
+  dot.className='sync-dot'+(state==='saving'?' saving':state==='error'?' error':'');
+  txt.textContent=state==='saving'?'Salvando...':state==='error'?'Erro ao salvar':'Sincronizado ✓';
+}
+
+// ── DEFAULT DATA ──
+function defaultData(){
+  return {depts:[
+    {id:'comercial',label:'Comercial',icon:'📈',desc:'Prospecção de cedentes, negociação e fechamento de contratos de fomento.',processos:[
+      {id:uid(),nome:'Prospecção de cedentes',responsavel:'Consultor Comercial',freq:'Contínuo',status:'blue',ordem:0,passos:[
+        {id:uid(),texto:'Identificar empresas com necessidade de capital de giro',detalhe:'Foco em PMEs com restrição de crédito bancário',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Abordar via telefone, WhatsApp ou indicação',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Apresentar o serviço de antecipação de duplicatas/cheques',detalhe:'Explicar taxa de deságio e prazo de operação',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Agendar visita ou reunião para análise dos títulos',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Registrar o prospect no sistema ou CRM',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Onboarding do novo cedente',responsavel:'Consultor Comercial',freq:'Por demanda',status:'yellow',ordem:1,passos:[
+        {id:uid(),texto:'Solicitar documentação da empresa cedente',detalhe:'Contrato social, cartão CNPJ, faturamento, balanço',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Encaminhar para análise de crédito e cadastro',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Aguardar aprovação do limite operacional',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Assinar contrato de fomento mercantil',detalhe:'Contrato mãe com o cedente',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Orientar o cedente sobre envio de títulos',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+    ]},
+    {id:'cadastro',label:'Cadastro',icon:'🗂️',desc:'Análise, aprovação e manutenção cadastral de cedentes e sacados.',processos:[
+      {id:uid(),nome:'Cadastro do cedente',responsavel:'Analista de Cadastro',freq:'Por demanda',status:'blue',ordem:0,passos:[
+        {id:uid(),texto:'Receber documentação enviada pelo comercial',detalhe:'Contrato social, CNPJ, documentos dos sócios',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Consultar restrições no Serasa, SPC e BACEN',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Verificar situação fiscal na Receita Federal',detalhe:'CNPJ ativo e sem pendências',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Definir limite de crédito aprovado',detalhe:'Com base no faturamento e histórico',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Cadastrar no sistema e comunicar o comercial',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Análise do sacado',responsavel:'Analista de Cadastro',freq:'Por demanda',status:'blue',ordem:1,passos:[
+        {id:uid(),texto:'Receber CNPJ do sacado junto com os títulos',detalhe:'Sacado é quem vai pagar a duplicata à Finan',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Consultar situação do sacado no Serasa e SPC',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Verificar histórico de pagamentos na Finan',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Aprovar ou reprovar o sacado para a operação',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Registrar parecer no sistema',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+    ]},
+    {id:'financeiro',label:'Financeiro',icon:'💰',desc:'Análise de borderôs, liquidação de operações, controle de vencimentos e fluxo de caixa.',processos:[
+      {id:uid(),nome:'Análise e aprovação de operação',responsavel:'Analista Financeiro',freq:'Diário',status:'blue',ordem:0,passos:[
+        {id:uid(),texto:'Receber borderô de títulos enviado pelo cedente',detalhe:'Duplicatas, cheques ou notas promissórias',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Verificar autenticidade e validade dos títulos',detalhe:'Conferir CNPJ do sacado, valor e vencimento',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Calcular o deságio a ser aplicado',detalhe:'Taxa flat + spread conforme perfil do sacado',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Verificar aprovação do cadastro do sacado',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Gerar e enviar termo de cessão de crédito',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Liquidação e repasse ao cedente',responsavel:'Analista Financeiro',freq:'Diário',status:'green',ordem:1,passos:[
+        {id:uid(),texto:'Receber contrato de cessão assinado pelo cedente',detalhe:'',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Calcular valor líquido a repassar após deságio',detalhe:'Valor de face − taxa − IOF − outros encargos',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Realizar TED/PIX para a conta do cedente',detalhe:'Mesmo dia ou D+1 conforme contrato',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Registrar a operação no sistema',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Enviar comprovante de repasse ao cedente',detalhe:'WhatsApp ou e-mail',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Controle de vencimentos e cobrança',responsavel:'Analista Financeiro',freq:'Diário',status:'yellow',ordem:2,passos:[
+        {id:uid(),texto:'Verificar títulos com vencimento no dia',detalhe:'',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Confirmar liquidação pelo sacado na conta da Finan',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Acionar equipe de ligações para cobranças em atraso',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Calcular encargos de mora se houver atraso',detalhe:'Juros + multa conforme contrato',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Comunicar cedente sobre inadimplência do sacado',detalhe:'Acionar cláusula de regresso se necessário',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Fluxo de caixa',responsavel:'Gestor Financeiro',freq:'Semanal',status:'green',ordem:3,passos:[
+        {id:uid(),texto:'Consolidar valores a receber dos sacados por período',detalhe:'',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Consolidar obrigações e custos operacionais',detalhe:'Folha, aluguel, captação, impostos',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Projetar disponibilidade para novas operações',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Gerar relatório para a diretoria',detalhe:'Posição de carteira, inadimplência e liquidez',midias:[],anotacao:'',ordem:3},
+      ]},
+    ]},
+    {id:'operacoes',label:'Operações / TI',icon:'⚙️',desc:'Sistemas internos, segurança de dados e suporte técnico.',processos:[
+      {id:uid(),nome:'Suporte técnico interno',responsavel:'Analista de TI',freq:'Contínuo',status:'blue',ordem:0,passos:[
+        {id:uid(),texto:'Colaborador abre chamado via sistema ou WhatsApp',detalhe:'',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'TI classifica prioridade: urgente ou normal',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Atendimento remoto ou presencial',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Registrar solução na base de conhecimento',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Confirmar resolução com o usuário',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+    ]},
+    {id:'ligacoes',label:'Ligações',icon:'📞',desc:'Confirmação de entrega de mercadorias, cobrança de sacados e ocorrências.',processos:[
+      {id:uid(),nome:'Confirmação de entrega ao sacado',responsavel:'Operador de Ligações',freq:'Diário',status:'blue',ordem:0,passos:[
+        {id:uid(),texto:'Receber lista de duplicatas recém-compradas pela Finan',detalhe:'Gerada pelo financeiro após liquidação',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Ligar para o sacado e confirmar recebimento da mercadoria',detalhe:'Verificar se a nota fiscal corresponde ao entregue',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Confirmar que o sacado reconhece a dívida com a Finan',detalhe:'Informar que o título foi cedido à Finan',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Registrar resultado da ligação no sistema',detalhe:'Confirmado, não atendeu ou contestou a entrega',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Tentar novamente em caso de não atendimento',detalhe:'Até 3 tentativas em horários diferentes',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Cobrança de sacado em atraso',responsavel:'Operador de Ligações',freq:'Diário',status:'yellow',ordem:1,passos:[
+        {id:uid(),texto:'Receber lista de títulos vencidos do financeiro',detalhe:'',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Ligar para o sacado e comunicar o atraso',detalhe:'Tom cordial e profissional',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Identificar motivo do não pagamento',detalhe:'',midias:[],anotacao:'',ordem:2},
+        {id:uid(),texto:'Registrar justificativa e compromisso de pagamento',detalhe:'',midias:[],anotacao:'',ordem:3},
+        {id:uid(),texto:'Escalar para o jurídico se houver recusa',detalhe:'',midias:[],anotacao:'',ordem:4},
+      ]},
+      {id:uid(),nome:'Relatório diário de ligações',responsavel:'Supervisor de Ligações',freq:'Diário',status:'green',ordem:2,passos:[
+        {id:uid(),texto:'Consolidar resultados das ligações do dia',detalhe:'Confirmadas, não atendidas, contestações',midias:[],anotacao:'',ordem:0},
+        {id:uid(),texto:'Verificar pendências para retentativa amanhã',detalhe:'',midias:[],anotacao:'',ordem:1},
+        {id:uid(),texto:'Enviar relatório ao financeiro e à diretoria',detalhe:'Até as 18h via e-mail ou WhatsApp',midias:[],anotacao:'',ordem:2},
+      ]},
+    ]},
+  ]};
+}
+
+// ── IMAGE COMPRESSION ──
+async function compressImage(base64, maxW=1200, quality=0.72){
+  return new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height;
+      if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      res(canvas.toDataURL('image/jpeg',quality));
+    };
+    img.onerror=()=>res(base64); // fallback: keep original
+    img.src=base64;
+  });
+}
+
+// ── FIREBASE SAVE — one doc per dept ──
+async function saveData(){
+  if(!DB)return;
+  setSyncStatus('saving');
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    try{
+      // Save each dept separately under portal/depts/{id}
+      for(const d of DB.depts){
+        await set(ref(db,'portal/depts/'+d.id), d);
+      }
+      // Save dept order/meta
+      await set(ref(db,'portal/meta'),{deptIds:DB.depts.map(d=>d.id)});
+      setSyncStatus('ok');
+    }catch(e){
+      console.error('Save error:',e);
+      setSyncStatus('error');
+      toast('Erro ao salvar. Verifique a conexao.','error');
+    }
+  },800);
+}
+
+async function loadFromFirebase(){
+  setLoadingText('Carregando dados...');
+  try{
+    const metaSnap=await get(ref(db,'portal/meta'));
+    if(metaSnap.exists()){
+      const meta=metaSnap.val();
+      const depts=[];
+      for(const id of meta.deptIds){
+        const dSnap=await get(ref(db,'portal/depts/'+id));
+        if(dSnap.exists()){
+          const d=dSnap.val();
+          d.processos=d.processos||[];
+          d.processos.forEach(p=>{p.passos=p.passos||[];p.passos.forEach(s=>{if(!s.midias)s.midias=[];});});
+          depts.push(d);
+        }
+      }
+      DB={depts};
+    } else {
+      DB=defaultData();
+      for(const d of DB.depts) await set(ref(db,'portal/depts/'+d.id),d);
+      await set(ref(db,'portal/meta'),{deptIds:DB.depts.map(d=>d.id)});
+    }
+    // Real-time listener
+    onValue(ref(db,'portal/meta'),async(snap)=>{
+      if(!snap.exists()||!currentUser)return;
+      const meta=snap.val();
+      const updatedDepts=[];
+      for(const id of meta.deptIds){
+        const dSnap=await get(ref(db,'portal/depts/'+id));
+        if(dSnap.exists()){
+          const d=dSnap.val();
+          d.processos=d.processos||[];
+          d.processos.forEach(p=>{p.passos=p.passos||[];p.passos.forEach(s=>{if(!s.midias)s.midias=[];});});
+          updatedDepts.push(d);
+        }
+      }
+      DB={depts:updatedDepts};
+      buildNav();
+      if(currentDeptId)selectDept(currentDeptId,true);
+    });
+    showLogin();
+  }catch(e){
+    console.error('Load error:',e);
+    setLoadingText('Erro de conexao com Firebase. Verifique sua internet e as regras do Realtime Database.');
+  }
+}
+
+function setLoadingText(t){document.getElementById('loading-text').textContent=t;}
+
+function showLogin(){
+  document.getElementById('loading-screen').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  populateDeptSelect();
+}
+
+// ── LOGIN ──
+function populateDeptSelect(){
+  const sel=document.getElementById('sel-dept');
+  if(!DB)return;
+  sel.innerHTML='<option value="">Selecione...</option><option value="__admin__">⭐ Administrador</option>';
+  DB.depts.forEach(d=>sel.innerHTML+=`<option value="${d.id}">${d.icon} ${d.label}</option>`);
+}
+
+function doLogin(){
+  const deptId=document.getElementById('sel-dept').value;
+  const name=document.getElementById('inp-name').value.trim();
+  const pass=document.getElementById('inp-pass').value.trim();
+  const err=document.getElementById('login-error');
+
+  // Validar campos
+  if(!deptId||!name||!pass){
+    err.style.display='block';
+    err.textContent='Preencha todos os campos.';
+    return;
+  }
+
+  // Verificar se e admin
+  if(deptId==='__admin__'){
+    if(pass!==PASSES.admin){
+      err.style.display='block';
+      err.textContent='Senha de administrador incorreta.';
+      return;
+    }
+    err.style.display='none';
+    currentUser={name, deptId:DB.depts[0].id, isAdmin:true};
+    startApp();
+    return;
+  }
+
+  // Verificar senha do departamento
+  const senhaCorreta = PASSES[deptId] || 'finan2024';
+  if(pass!==senhaCorreta){
+    err.style.display='block';
+    err.textContent='Senha incorreta para este departamento.';
+    return;
+  }
+
+  err.style.display='none';
+  currentUser={name, deptId, isAdmin:false};
+  startApp();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('login-screen').style.display!=='none')doLogin();});
+
+function doLogout(){
+  currentUser=null;currentDeptId=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('inp-pass').value='';
+}
+
+// ── APP ──
+function startApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  const d=DB.depts.find(x=>x.id===currentUser.deptId);
+  const initials=currentUser.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('user-avatar').textContent=initials;
+  document.getElementById('user-avatar').style.background=currentUser.isAdmin?'var(--gold)':'';
+  document.getElementById('user-avatar').style.color=currentUser.isAdmin?'var(--navy)':'';
+  document.getElementById('user-name-display').textContent=currentUser.name;
+  document.getElementById('user-dept-display').textContent=currentUser.isAdmin?('Admin — '+d?.label):d?.label||'';
+  buildNav();showWelcome();
+}
+
+function buildNav(){
+  const nav=document.getElementById('nav-menu');
+  if(!nav||!currentUser)return;
+  // Admin sees all depts; others only see their own
+  const visibleDepts=currentUser.isAdmin ? DB.depts : DB.depts.filter(d=>d.id===currentUser.deptId);
+  nav.innerHTML=visibleDepts.map(d=>`
+    <div class="nav-item ${d.id===currentDeptId?'active':''}" id="nav-${d.id}" onclick="selectDept('${d.id}')">
+      <span class="nav-icon">${d.icon}</span>
+      <span class="nav-label">${d.label}</span>
+      ${(currentUser.isAdmin||d.id===currentUser.deptId)?`<button class="nav-edit-btn" title="Editar" onclick="event.stopPropagation();openEditDept('${d.id}')">✏️</button>`:''}
+    </div>`).join('');
+}
+
+function showWelcome(){
+  currentDeptId=null;buildNav();
+  document.getElementById('topbar-title').textContent=`Olá, ${currentUser.name.split(' ')[0]}!`;
+  document.getElementById('topbar-sub').textContent='Selecione um departamento para ver os processos';
+  document.getElementById('topbar-actions').innerHTML='';
+  document.getElementById('main-content').innerHTML=`
+    <div class="welcome-screen">
+      <div class="welcome-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <h2>Portal de Processos</h2>
+      <p>Manual de operações da Finan Factoring Fomento Mercantil Ltda. Passo a passo de cada atividade, com imagens e vídeos do sistema.</p>
+      <div class="dept-cards">${(currentUser.isAdmin?DB.depts:DB.depts.filter(d=>d.id===currentUser.deptId)).map(d=>`
+        <div class="dept-card" onclick="selectDept('${d.id}')">
+          <div class="dept-card-icon">${d.icon}</div>
+          <div class="dept-card-name">${d.label}</div>
+          <div class="dept-card-count">${d.processos.length} processo${d.processos.length!==1?'s':''}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function selectDept(id, silent=false){
+  currentDeptId=id;
+  if(!silent)closeSidebar();
+  buildNav();
+  const d=DB.depts.find(x=>x.id===id);if(!d)return;
+  document.getElementById('topbar-title').textContent=`${d.icon} ${d.label}`;
+  document.getElementById('topbar-sub').textContent=d.desc;
+  const canEdit=currentUser.isAdmin || d.id===currentUser.deptId;
+  document.getElementById('topbar-actions').innerHTML=canEdit?`<button class="btn btn-primary" onclick="openAddProcesso('${id}')">＋ Novo processo</button>`:'';
+  renderDept(d,canEdit);
+}
+
+// ── RENDER ──
+function renderDept(d,canEdit){
+  const hint=canEdit&&d.processos.length>1?`<span class="reorder-hint">⠿ Arraste para reordenar</span>`:'';
+  document.getElementById('main-content').innerHTML=`
+    <div class="process-header-bar">
+      <div class="process-title-block">
+        <h2>${d.icon} ${d.label}</h2>
+        <p>${d.processos.length} processo${d.processos.length!==1?'s':''} mapeado${d.processos.length!==1?'s':''}</p>
+      </div>${hint}
+    </div>
+    <div class="process-grid" id="proc-grid">${d.processos.map((p,i)=>renderProcCard(p,i,d.id,canEdit)).join('')}</div>`;
+  if(canEdit)initDragSort(d.id);
+}
+
+function renderProcCard(p,i,deptId,canEdit){
+  const dragHandle=canEdit?`<div class="proc-drag-handle" title="Arrastar para reordenar"><span></span><span></span><span></span></div>`:'';
+  const delBtn=canEdit?`<button class="proc-del-btn" title="Apagar processo" onclick="event.stopPropagation();confirmDeleteProcesso('${deptId}','${p.id}')">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+  </button>`:'';
+  return `<div class="proc-card" id="pcard-${p.id}" draggable="${canEdit}" data-proc-id="${p.id}">
+    <div class="proc-card-header">
+      ${dragHandle}
+      <div class="proc-card-left" onclick="toggleProc('${p.id}','${deptId}')">
+        <div class="proc-num">${i+1}</div>
+        <div>
+          <div class="proc-name">${esc(p.nome)}</div>
+          <div class="proc-meta"><span>👤 ${esc(p.responsavel)}</span><span>· ${esc(p.freq)}</span></div>
+        </div>
+      </div>
+      <div class="proc-card-right">
+        <span class="badge ${BADGE_MAP[p.status]}">${BADGE_LABEL[p.status]}</span>
+        ${delBtn}
+        <svg class="chevron-icon" id="chev-${p.id}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="toggleProc('${p.id}','${deptId}')"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="proc-body" id="pbody-${p.id}">
+      ${canEdit?`<div class="proc-body-actions">
+        <button class="btn btn-outline btn-sm" onclick="openEditProcesso('${deptId}','${p.id}')">✏️ Editar processo</button>
+        <button class="btn btn-outline btn-sm" onclick="openAddPasso('${deptId}','${p.id}')">＋ Adicionar passo</button>
+      </div>`:''}
+      <div class="steps-label">Passo a passo ${canEdit&&p.passos.length>1?'<span style="font-size:10px;color:var(--text3);font-weight:400;margin-left:4px;">⠿ arraste para reordenar</span>':''}</div>
+      <div class="steps-list" id="steps-${p.id}">${p.passos.map((s,j)=>renderStep(s,j,deptId,p.id,canEdit)).join('')}</div>
+      <div class="proc-footer">
+        <div class="proc-resp">Responsável: <strong>${esc(p.responsavel)}</strong></div>
+        <span class="badge ${BADGE_MAP[p.status]}">${esc(p.freq)}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderStep(s,j,deptId,procId,canEdit){
+  if(!s.midias)s.midias=[];
+  const midiaHTML=renderMidias(s.midias,deptId,procId,s.id,canEdit);
+  const handle=canEdit?`<span class="step-drag-handle" title="Reordenar">⠿</span>`:'';
+  return `<div class="step-item" id="step-${s.id}" draggable="${canEdit}" data-step-id="${s.id}">
+    <div class="step-left"><div class="step-dot">${j+1}</div><div class="step-line"></div></div>
+    <div class="step-content">
+      <div class="step-text-row">${handle}<div class="step-text">${esc(s.texto)}</div></div>
+      ${s.detalhe?`<div class="step-detail">${esc(s.detalhe)}</div>`:''}
+      ${s.anotacao?`<div class="step-annotation"><div class="step-annotation-label">📌 Anotação</div>${esc(s.anotacao)}</div>`:''}
+      ${midiaHTML}
+      ${canEdit?`<div class="step-actions">
+        <button class="icon-btn" onclick="openEditPasso('${deptId}','${procId}','${s.id}')">✏️ Editar</button>
+        <button class="icon-btn" onclick="openAnnotation('${deptId}','${procId}','${s.id}')">📌 Anotação</button>
+        <button class="icon-btn danger" onclick="confirmDeletePasso('${deptId}','${procId}','${s.id}')">🗑 Apagar passo</button>
+      </div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderMidias(midias,deptId,procId,stepId,canEdit){
+  if(!midias.length&&!canEdit)return '';
+  const thumbs=midias.map((m,idx)=>{
+    const isVideo=m.tipo==='video';
+    const visual=isVideo
+      ?`<video src="${m.src}" controls style="width:100%;height:100%;object-fit:cover;display:block;"></video>`
+      :`<img src="${m.src}" alt="${esc(m.legenda||'')}" onclick="openLightbox('${m.src.replace(/'/g,"%27")}')">`;
+    const removeBtn=canEdit?`<button class="media-remove" onclick="removeMedia('${deptId}','${procId}','${stepId}',${idx})" title="Remover">✕</button>`:'';
+    const captionField=canEdit
+      ?`<input class="media-caption-edit" value="${esc(m.legenda||'')}" placeholder="Legenda (opcional)" onchange="updateCaption('${deptId}','${procId}','${stepId}',${idx},this.value)">`
+      :(m.legenda?`<div style="font-size:11px;color:var(--text3);padding:4px 8px 6px;font-style:italic;">${esc(m.legenda)}</div>`:'');
+    return `<div class="media-thumb-wrap">
+      <div class="media-visual">${visual}${removeBtn}<span class="media-type-badge">${isVideo?'▶ Vídeo':'🖼 Imagem'}</span></div>
+      ${captionField}
+    </div>`;
+  }).join('');
+
+  const uploadZone=canEdit?`
+    <label class="media-upload-zone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p><strong>Clique para adicionar imagens ou vídeos</strong></p>
+      <span>PNG, JPG, GIF, MP4, MOV — sem limite de quantidade</span>
+      <input type="file" accept="image/*,video/*" multiple style="display:none" onchange="uploadMedias(event,'${deptId}','${procId}','${stepId}')">
+    </label>`:'';
+
+  return `<div class="media-section">
+    <div class="media-section-title">📎 Imagens e vídeos do ERP ${midias.length?`<span style="background:var(--blue-light);color:var(--blue);font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;">${midias.length}</span>`:''}</div>
+    ${midias.length?`<div class="media-grid">${thumbs}</div>`:''}
+    ${uploadZone}
+  </div>`;
+}
+
+// ── MEDIA ──
+async function uploadMedias(event,deptId,procId,stepId){
+  const files=Array.from(event.target.files);
+  if(!files.length)return;
+  event.target.value='';
+  const d=DB.depts.find(x=>x.id===deptId);
+  const p=d&&d.processos.find(x=>x.id===procId);
+  const s=p&&p.passos.find(x=>x.id===stepId);
+  if(!s)return;
+  if(!s.midias)s.midias=[];
+
+  toast('Comprimindo e salvando...');
+  setSyncStatus('saving');
+
+  for(const file of files){
+    const isVideo=file.type.startsWith('video/');
+    const reader=new FileReader();
+    let src=await new Promise(res=>{reader.onload=e=>res(e.target.result);reader.readAsDataURL(file);});
+    if(!isVideo){
+      // Compress image to keep under Firestore limits
+      src=await compressImage(src,1200,0.72);
+    } else {
+      // Videos: warn if too large (>500KB base64 ~ 375KB file)
+      if(src.length>700000){
+        toast('⚠️ Vídeo muito grande. Use vídeos curtos (até ~30s) ou prints de tela.','error');
+        continue;
+      }
+    }
+    s.midias.push({id:uid(),src,tipo:isVideo?'video':'imagem',legenda:''});
+  }
+  await saveData();
+  toast(`${files.length} arquivo${files.length>1?'s':''} salvo${files.length>1?'s':''}!`,'success');
+  reopenStep(deptId,procId,stepId);
+}
+
+async function removeMedia(deptId,procId,stepId,idx){
+  if(!confirm('Remover esta mídia?'))return;
+  const d=DB.depts.find(x=>x.id===deptId);
+  const p=d&&d.processos.find(x=>x.id===procId);
+  const s=p&&p.passos.find(x=>x.id===stepId);
+  if(!s||!s.midias)return;
+  s.midias.splice(idx,1);
+  await saveData();
+  reopenStep(deptId,procId,stepId);
+}
+
+function updateCaption(deptId,procId,stepId,idx,value){
+  const d=DB.depts.find(x=>x.id===deptId);
+  const p=d&&d.processos.find(x=>x.id===procId);
+  const s=p&&p.passos.find(x=>x.id===stepId);
+  if(s&&s.midias&&s.midias[idx]){s.midias[idx].legenda=value;saveData();}
+}
+
+function reopenStep(deptId,procId,stepId){
+  selectDept(deptId,true);
+  setTimeout(()=>{
+    const b=document.getElementById('pbody-'+procId);
+    const c=document.getElementById('chev-'+procId);
+    if(b&&!b.classList.contains('open')){b.classList.add('open');c&&c.classList.add('open');}
+    if(stepId){const el=document.getElementById('step-'+stepId);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  },80);
+}
+
+// ── TOGGLE ──
+function toggleProc(id,deptId){
+  const body=document.getElementById('pbody-'+id);
+  const chev=document.getElementById('chev-'+id);
+  const isOpen=body.classList.contains('open');
+  document.querySelectorAll('.proc-body.open').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.chevron-icon.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){
+    body.classList.add('open');chev.classList.add('open');
+    const d=DB.depts.find(x=>x.id===deptId);
+    if(d&&d.id===currentUser.deptId)initStepDragSort(id,deptId);
+  }
+}
+
+// ── DRAG SORT PROCESSES ──
+function initDragSort(deptId){
+  const grid=document.getElementById('proc-grid');if(!grid)return;
+  let dragSrc=null;
+  grid.querySelectorAll('.proc-card').forEach(card=>{
+    card.addEventListener('dragstart',e=>{dragSrc=card;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',card.dataset.procId);});
+    card.addEventListener('dragend',()=>{
+      card.classList.remove('dragging');
+      grid.querySelectorAll('.proc-card').forEach(c=>c.classList.remove('drag-over'));
+      const d=DB.depts.find(x=>x.id===deptId);if(!d)return;
+      const newOrder=[...grid.querySelectorAll('.proc-card')].map(c=>c.dataset.procId);
+      d.processos.sort((a,b)=>newOrder.indexOf(a.id)-newOrder.indexOf(b.id));
+      grid.querySelectorAll('.proc-num').forEach((el,i)=>el.textContent=i+1);
+      saveData();toast('Ordem salva!','success');
+    });
+    card.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';if(card!==dragSrc){grid.querySelectorAll('.proc-card').forEach(c=>c.classList.remove('drag-over'));card.classList.add('drag-over');}});
+    card.addEventListener('dragleave',()=>card.classList.remove('drag-over'));
+    card.addEventListener('drop',e=>{e.preventDefault();if(dragSrc&&dragSrc!==card){const cards=[...grid.querySelectorAll('.proc-card')];if(cards.indexOf(dragSrc)<cards.indexOf(card))card.after(dragSrc);else card.before(dragSrc);}card.classList.remove('drag-over');});
+  });
+}
+
+// ── DRAG SORT STEPS ──
+function initStepDragSort(procId,deptId){
+  const list=document.getElementById('steps-'+procId);if(!list)return;
+  let dragSrc=null;
+  list.querySelectorAll('.step-item').forEach(item=>{
+    item.addEventListener('dragstart',e=>{dragSrc=item;item.style.opacity='.4';e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',item.dataset.stepId);});
+    item.addEventListener('dragend',()=>{
+      item.style.opacity='';
+      list.querySelectorAll('.step-item').forEach(i=>i.style.borderTop='');
+      const d=DB.depts.find(x=>x.id===deptId);if(!d)return;
+      const p=d.processos.find(x=>x.id===procId);if(!p)return;
+      const newOrder=[...list.querySelectorAll('.step-item')].map(i=>i.dataset.stepId);
+      p.passos.sort((a,b)=>newOrder.indexOf(a.id)-newOrder.indexOf(b.id));
+      list.querySelectorAll('.step-dot').forEach((el,i)=>el.textContent=i+1);
+      saveData();
+    });
+    item.addEventListener('dragover',e=>{e.preventDefault();list.querySelectorAll('.step-item').forEach(i=>i.style.borderTop='');if(item!==dragSrc)item.style.borderTop='2px solid var(--blue)';});
+    item.addEventListener('dragleave',()=>item.style.borderTop='');
+    item.addEventListener('drop',e=>{e.preventDefault();if(dragSrc&&dragSrc!==item){const items=[...list.querySelectorAll('.step-item')];if(items.indexOf(dragSrc)<items.indexOf(item))item.after(dragSrc);else item.before(dragSrc);}item.style.borderTop='';});
+  });
+}
+
+// ── MODALS ──
+function openModal(html){document.getElementById('modal-box').innerHTML=html;document.getElementById('modal-overlay').style.display='flex';}
+function closeModal(){document.getElementById('modal-overlay').style.display='none';}
+function closeModalOnOverlay(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+
+// DEPT
+function openAddDept(){
+  openModal(`<h3>Novo departamento</h3>
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="m-dept-name" placeholder="Ex: Jurídico"></div>
+    <div class="form-group"><label class="form-label">Descrição</label><input class="form-input" id="m-dept-desc" placeholder="O que este departamento faz"></div>
+    <div class="form-group"><label class="form-label">Ícone</label><div class="emoji-grid">${EMOJIS.map(e=>`<div class="emoji-opt" onclick="selEmoji(this,'${e}')">${e}</div>`).join('')}</div></div>
+    <input type="hidden" id="m-dept-icon" value="📋">
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveDept()">Criar</button></div>`);
+}
+function selEmoji(el,e){document.querySelectorAll('.emoji-opt').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');document.getElementById('m-dept-icon').value=e;}
+function saveDept(){
+  const name=document.getElementById('m-dept-name').value.trim();if(!name)return alert('Digite o nome.');
+  DB.depts.push({id:'dept-'+uid(),label:name,icon:document.getElementById('m-dept-icon').value,desc:document.getElementById('m-dept-desc').value.trim(),processos:[]});
+  saveData();closeModal();populateDeptSelect();buildNav();showWelcome();toast('Departamento criado!','success');
+}
+function openEditDept(deptId){
+  const d=DB.depts.find(x=>x.id===deptId);if(!d)return;
+  openModal(`<h3>Editar departamento</h3>
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="m-dept-name" value="${esc(d.label)}"></div>
+    <div class="form-group"><label class="form-label">Descrição</label><input class="form-input" id="m-dept-desc" value="${esc(d.desc)}"></div>
+    <div class="form-group"><label class="form-label">Ícone</label><div class="emoji-grid">${EMOJIS.map(e=>`<div class="emoji-opt ${e===d.icon?'selected':''}" onclick="selEmoji(this,'${e}')">${e}</div>`).join('')}</div></div>
+    <input type="hidden" id="m-dept-icon" value="${d.icon}">
+    <div class="modal-actions"><button class="btn btn-danger" onclick="confirmDeleteDept('${deptId}')">🗑 Apagar</button><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="updateDept('${deptId}')">Salvar</button></div>`);
+}
+function updateDept(deptId){
+  const d=DB.depts.find(x=>x.id===deptId);if(!d)return;
+  d.label=document.getElementById('m-dept-name').value.trim()||d.label;
+  d.desc=document.getElementById('m-dept-desc').value.trim();
+  d.icon=document.getElementById('m-dept-icon').value;
+  saveData();closeModal();populateDeptSelect();buildNav();selectDept(deptId);toast('Departamento atualizado!','success');
+}
+function confirmDeleteDept(deptId){
+  const d=DB.depts.find(x=>x.id===deptId);
+  if(!confirm(`Apagar "${d.label}" e todos os seus processos?`))return;
+  DB.depts=DB.depts.filter(x=>x.id!==deptId);
+  saveData();closeModal();populateDeptSelect();showWelcome();
+}
+
+// PROCESSO
+function openAddProcesso(deptId){
+  openModal(`<h3>Novo processo</h3>
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="m-proc-nome" placeholder="Ex: Análise de borderô"></div>
+    <div class="form-group"><label class="form-label">Responsável</label><input class="form-input" id="m-proc-resp" placeholder="Ex: Analista Financeiro"></div>
+    <div class="form-group"><label class="form-label">Frequência</label><input class="form-input" id="m-proc-freq" placeholder="Ex: Diário, Semanal, Por demanda"></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="m-proc-status"><option value="blue">Em uso</option><option value="green">Documentado</option><option value="yellow">Em revisão</option></select></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveProcesso('${deptId}')">Criar</button></div>`);
+}
+function saveProcesso(deptId){
+  const nome=document.getElementById('m-proc-nome').value.trim();if(!nome)return alert('Digite o nome.');
+  const d=DB.depts.find(x=>x.id===deptId);
+  d.processos.push({id:uid(),nome,responsavel:document.getElementById('m-proc-resp').value.trim(),freq:document.getElementById('m-proc-freq').value.trim(),status:document.getElementById('m-proc-status').value,ordem:d.processos.length,passos:[]});
+  saveData();closeModal();selectDept(deptId);toast('Processo criado!','success');
+}
+function openEditProcesso(deptId,procId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);if(!p)return;
+  openModal(`<h3>Editar processo</h3>
+    <div class="form-group"><label class="form-label">Nome</label><input class="form-input" id="m-proc-nome" value="${esc(p.nome)}"></div>
+    <div class="form-group"><label class="form-label">Responsável</label><input class="form-input" id="m-proc-resp" value="${esc(p.responsavel)}"></div>
+    <div class="form-group"><label class="form-label">Frequência</label><input class="form-input" id="m-proc-freq" value="${esc(p.freq)}"></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="m-proc-status"><option value="blue" ${p.status==='blue'?'selected':''}>Em uso</option><option value="green" ${p.status==='green'?'selected':''}>Documentado</option><option value="yellow" ${p.status==='yellow'?'selected':''}>Em revisão</option></select></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="updateProcesso('${deptId}','${procId}')">Salvar</button></div>`);
+}
+function updateProcesso(deptId,procId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);if(!p)return;
+  p.nome=document.getElementById('m-proc-nome').value.trim()||p.nome;
+  p.responsavel=document.getElementById('m-proc-resp').value.trim();
+  p.freq=document.getElementById('m-proc-freq').value.trim();
+  p.status=document.getElementById('m-proc-status').value;
+  saveData();closeModal();selectDept(deptId);toast('Processo atualizado!','success');
+}
+function confirmDeleteProcesso(deptId,procId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);
+  if(!confirm(`Apagar o processo "${p.nome}"?`))return;
+  d.processos=d.processos.filter(x=>x.id!==procId);
+  saveData();selectDept(deptId);toast('Processo apagado.','');
+}
+
+// PASSO
+function openAddPasso(deptId,procId){
+  openModal(`<h3>Novo passo</h3>
+    <div class="form-group"><label class="form-label">Descrição</label><textarea class="form-textarea" id="m-step-texto" placeholder="O que deve ser feito neste passo..."></textarea></div>
+    <div class="form-group"><label class="form-label">Detalhe / observação (opcional)</label><input class="form-input" id="m-step-detalhe" placeholder="Ex: Verificar horário comercial"></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="savePasso('${deptId}','${procId}')">Adicionar</button></div>`);
+}
+function savePasso(deptId,procId){
+  const texto=document.getElementById('m-step-texto').value.trim();if(!texto)return alert('Descreva o passo.');
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);
+  p.passos.push({id:uid(),texto,detalhe:document.getElementById('m-step-detalhe').value.trim(),midias:[],anotacao:'',ordem:p.passos.length});
+  saveData();closeModal();reopenStep(deptId,procId,null);toast('Passo adicionado!','success');
+}
+function openEditPasso(deptId,procId,stepId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);const s=p&&p.passos.find(x=>x.id===stepId);if(!s)return;
+  openModal(`<h3>Editar passo</h3>
+    <div class="form-group"><label class="form-label">Descrição</label><textarea class="form-textarea" id="m-step-texto">${esc(s.texto)}</textarea></div>
+    <div class="form-group"><label class="form-label">Detalhe / observação</label><input class="form-input" id="m-step-detalhe" value="${esc(s.detalhe)}"></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="updatePasso('${deptId}','${procId}','${stepId}')">Salvar</button></div>`);
+}
+function updatePasso(deptId,procId,stepId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);const s=p&&p.passos.find(x=>x.id===stepId);if(!s)return;
+  s.texto=document.getElementById('m-step-texto').value.trim()||s.texto;
+  s.detalhe=document.getElementById('m-step-detalhe').value.trim();
+  saveData();closeModal();reopenStep(deptId,procId,stepId);toast('Passo atualizado!','success');
+}
+function confirmDeletePasso(deptId,procId,stepId){
+  if(!confirm('Apagar este passo?'))return;
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);
+  p.passos=p.passos.filter(x=>x.id!==stepId);
+  saveData();reopenStep(deptId,procId,null);
+}
+function openAnnotation(deptId,procId,stepId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);const s=p&&p.passos.find(x=>x.id===stepId);if(!s)return;
+  openModal(`<h3>📌 Anotação do passo</h3>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:1rem;">Observações, dicas ou alertas para este passo.</p>
+    <div class="form-group"><textarea class="form-textarea" id="m-annot" placeholder="Ex: Atenção! Verificar o saldo antes de liberar o repasse." style="min-height:120px">${esc(s.anotacao)}</textarea></div>
+    <div class="modal-actions"><button class="btn btn-outline" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveAnnotation('${deptId}','${procId}','${stepId}')">Salvar</button></div>`);
+}
+function saveAnnotation(deptId,procId,stepId){
+  const d=DB.depts.find(x=>x.id===deptId);const p=d&&d.processos.find(x=>x.id===procId);const s=p&&p.passos.find(x=>x.id===stepId);if(!s)return;
+  s.anotacao=document.getElementById('m-annot').value.trim();
+  saveData();closeModal();reopenStep(deptId,procId,stepId);toast('Anotação salva!','success');
+}
+
+// LIGHTBOX
+function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').style.display='flex';}
+function closeLightbox(){document.getElementById('lightbox').style.display='none';}
+
+// SIDEBAR
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
+
+// ── INIT ──
+loadFromFirebase();
+
+// expose globals for inline handlers
+window.doLogin=doLogin;window.doLogout=doLogout;
+window.selectDept=selectDept;window.showWelcome=showWelcome;
+window.openAddDept=openAddDept;window.openEditDept=openEditDept;window.saveDept=saveDept;window.updateDept=updateDept;window.confirmDeleteDept=confirmDeleteDept;window.selEmoji=selEmoji;
+window.openAddProcesso=openAddProcesso;window.saveProcesso=saveProcesso;window.openEditProcesso=openEditProcesso;window.updateProcesso=updateProcesso;window.confirmDeleteProcesso=confirmDeleteProcesso;
+window.toggleProc=toggleProc;
+window.openAddPasso=openAddPasso;window.savePasso=savePasso;window.openEditPasso=openEditPasso;window.updatePasso=updatePasso;window.confirmDeletePasso=confirmDeletePasso;
+window.openAnnotation=openAnnotation;window.saveAnnotation=saveAnnotation;
+window.uploadMedias=uploadMedias;window.removeMedia=removeMedia;window.updateCaption=updateCaption;
+window.openLightbox=openLightbox;window.closeLightbox=closeLightbox;
+window.closeModal=closeModal;window.closeModalOnOverlay=closeModalOnOverlay;
+window.toggleSidebar=toggleSidebar;window.closeSidebar=closeSidebar;
+</script>
+
+
+</body></html>
